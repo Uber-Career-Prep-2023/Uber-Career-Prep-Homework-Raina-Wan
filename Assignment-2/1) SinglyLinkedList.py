@@ -37,11 +37,9 @@ class SinglyLinkedList:
             
     # creates new Node with data val after Node loc
     def push_node(self, val, i):
-        if i == self.length or not self.head:
+        if i == self.length() or not self.head:
             return
-        elif i == 0:
-            self.push_front(val)
-        elif i == self.length - 1:
+        elif i == self.length() - 1:
             self.push_back(val)
         else:
             curr = self.head
@@ -147,7 +145,7 @@ def main():
     list.pop_front()    # | 2 | 6 | 7 | 8 |
     list.pop_back()     # | 2 | 6 | 7 |
     list.pop_node(1)    # | 2 | 7 |
-    list.push_node(4,0) # | 4 | 2 | 7 |
+    list.push_node(4,0) # | 2 | 4 | 7 |
     
     list.print()
 
