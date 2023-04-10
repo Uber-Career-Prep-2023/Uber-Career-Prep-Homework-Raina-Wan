@@ -71,21 +71,19 @@ class SinglyLinkedList:
     
     # removes node at index; returns head
     def pop_node(self, i):
-        # edge case: i > length of list
-        if i > self.length():
+        if i == self.length():
             return
-        if i == 0: 
+        elif i == 0: 
             self.pop_front()
+        elif i == self.length() - 1:
+            self.pop_back()
         prev, curr = self.head, self.head
         count = 0
         while count != i:
             prev = curr
             curr = curr.next
             count += 1
-        if curr.next:
-            prev.next = curr.next
-        else:
-            prev.next = None
+        prev.next = curr.next
     
     # returns length of linked list
     def length(self):
