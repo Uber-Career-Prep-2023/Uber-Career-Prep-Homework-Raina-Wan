@@ -1,58 +1,94 @@
 """
 Raina Wan
-04-26-2022
+04-20-2023
 
-Is Binary Search Tree:
-Given a binary tree, determine if it is a binary search tree.
-
-Time Complexity: O(n) => worst case: must visit all nodes to determine if BST
-Space Complexity: O(n)
-
-Technique:
-Breadth First Search
-
-Time Spent:
-35 minutes
-
-Approach:
-1) If left node is greater than current node, invalid BST. Return False
-2) If right node is less than current node, invalid BST. Return False
-3) Otherwise, call BST on left and right nodes. Return True
+Binary Search Tree
 """
 
-
-
 class Node:
-    def __init__(self, val = 0, left = None, right = None):
+    def __init__(self, val):
         self.val = val
-        self.left = left
-        self.right = right
+        self.left = None
+        self.right = None
+
+class BST:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
         
-class IsBST():
-    def isValid(self, root):
-        
-        def valid(node, left, right):
-            if not node:
-                return True
-            if left > node.val or right < node.val:
+    def min(self):
+        if not self.left: return None
+        curr = self.left
+        while curr.left:
+            curr = curr.left
+        return curr.val
+    
+    def max(self):
+        if not self.right: return None
+        curr = self.right
+        while curr.right:
+            curr = curr.right
+        return curr.val
+    
+    def contains(self, val):
+        if val < self.val:
+            if not self.left: 
+                return False # traversed to end and doesn't exist
+            else:
+                return self.left.contains(val)
+        elif val > self.val:
+            if not self.right:
                 return False
-            return (valid(node.left, left, node.val) and
-                    valid(node.right, node.val, right))
-        return valid(root, float("-inf"), float("inf"))
+            else:
+                return self.right.contains(val)
+        else: # val == self.val
+            return True
+    
+    def insert(self, val):
+        if val < self.val:
+            if not self.left:
+                self.left = BST(val)
+            else:
+                self.left.insert(val)
+        else:
+            if not self.right:
+                self.right = BST(val)
+            else:
+                self.right.insert(val)
+    
+    def delete(self, val):
+        if val < self.val:
+            if not self.left: return None # not found
+            else: return self.left.delete(val)
+        elif val > self.val:
+            if not self.right: return None # not found
+            else: return self.right.delete(val)
+        else: # found
+            if not self.right: # no children on right. replace with left
+                return self.left
+            elif not self.left:
+                return self.right
+            else: # both children present
+                # replace curr node with smallest node on right side
+                curr = self.right
+                while curr.left:
+                    curr = curr.left
+                val = curr.val
+        val = None
+    
+
+        
 
 def main():
-    node1 = Node(5)
-    node2 = Node(4)
-    node3 = Node(6)
-    node1.left = node2
-    node1.right = node3
-
-    tree = IsBST()
-    print(tree.isValid(node1)) # Output: True
-
-    node4 = Node(9)
-    node2.left = node4
-
-    print(tree.isValid(node1)) # Output: False
+    tree = BST(6)
+    tree.insert(4)
+    tree.insert(9)
+    tree.insert(1)
+    tree.delete(1)
+    print(tree.min()) # 1
+    print(tree.max()) # 9
+    print(tree.contains(7)) # False
+    print(tree.contains(9)) # True
 
 main()
