@@ -7,7 +7,7 @@ Given a binary matrix in which 1s represent land and 0s represent water.
 Return the number of islands (contiguous 1s surrounded by 0s or the edge of the matrix).
 
 Time Complexity: O(m x n) => have to visit every box in the grid
-Space Complexity: O(m x n)
+Space Complexity: O(1) => only storing number of islands
 
 Technique:
 Depth-first search
